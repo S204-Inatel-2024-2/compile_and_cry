@@ -5,16 +5,12 @@ import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { useNavigation } from '@react-navigation/native';
-import { Box } from '@components/Box';
 
-export function SignIn() {
+export function Login() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
-  function handleCreateAccont() {
-    navigation.navigate("initial");
-  }
-  function handleToLogin() {
-    navigation.navigate("login");
+  function handleToHome() {
+    navigation.navigate("home");
   }
 
   return (
@@ -30,27 +26,19 @@ export function SignIn() {
       <VStack flex={1} px="$1" pb="$16">
         <Center my="$24">
           <Image w="$2/3" h="$64" source={Logo} alt="Logo" />
-          <Text color="$white" fontSize="$xl">
-            Treine seu corpo
-          </Text>
         </Center>
         <Center gap="$6">
-          <Heading color="$white">Bem Vindo ao GYM++</Heading>
           <Heading color="$orange500" paddingBottom={20}>
             Seu treino na palma da mão!
           </Heading>
-
-          {/* <Input 
+          <Input 
             placeholder="E-mail"
             keyboardType="email-address"
             autoCapitalize="none"
           />
-          <Input placeholder="Senha" secureTextEntry /> */}
-          <Button title="Iniciar" onPress={handleCreateAccont} />
-          <Button variant="outline" title="Já tenho conta" onPress={handleToLogin}/>
-          <Center flex={1} justifyContent="flex-end" marginTop="$4">
-            {/* Outros conteúdos aqui */}
-          </Center>
+          <Input placeholder="Senha" secureTextEntry />
+          <Button variant="outline" title="Entrar" onPress={handleToHome}/>
+
         </Center>
       </VStack>
     </VStack>

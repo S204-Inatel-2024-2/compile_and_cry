@@ -16,7 +16,7 @@ import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { useNavigation } from '@react-navigation/native';
 import { Box } from '@components/Box';
 
-export function MyProfiletwo() {
+export function MyProfileFive() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   const [progress, setProgress] = useState(0);
@@ -24,7 +24,7 @@ export function MyProfiletwo() {
   function handleNext() {
     if (progress < 100) {
       setProgress(progress + 20);
-      navigation.navigate("myprofilethree");
+      navigation.navigate("myprofilesix");
     } else {
       navigation.goBack(); 
     }
@@ -43,7 +43,7 @@ export function MyProfiletwo() {
 
         <VStack flex={1} px="$10" pb="$16">
 
-          <Center gap="$2" mt={30} mb={30}>
+        <Center gap="$2" mt={30} mb={30}>
             <Heading color="$white">Meu Perfil</Heading>
             <Progress
               value={progress}
@@ -54,21 +54,20 @@ export function MyProfiletwo() {
           </Center>
 
           <Heading color="$orange500" fontSize={30} mb={20}>
-            Qual é o seu objetivo?
+            Academia com equipamentos simples, como barras ehalteres.
           </Heading>
-          <Box title="Hipertrofia" variant="solid" mb={10}>
-            Aumento do volume muscular resultante do crescimento das fibras musculares.
-          </Box>
-
-          <Box title="Definição Muscular" variant="solid" mb={10}>
-          Processo de reduzir a gordura corporal, tornando músculos mais visíveis e definidos.
-          </Box>
-
-          <Box title="Emagrecer" variant="solid">
-          Redução da gordura corporal total.
-          </Box>
-
           
+          <Box title="Academia simples" variant="solid" mb={10}>
+          Academia com equipamentos simples, como barras ehalteres.
+          </Box>
+
+          <Box title="Academia avançada" variant="solid" mb={10}>
+          Academia completa, equipada com todos os equipamentos necessários.
+          </Box>
+
+          <Box title="Casa/externo" variant="solid" mb={10}>
+          Local onde não há nenhum equipamento expecífico para realização de atividade física.
+          </Box>
 
           <Button
             title="Próximo"

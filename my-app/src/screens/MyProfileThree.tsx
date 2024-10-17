@@ -6,6 +6,7 @@ import {
   ScrollView,
   VStack,
   Progress,
+  HStack,
 } from '@gluestack-ui/themed';
 
 import BackgroundImg from '@assets/Backgroud.png';
@@ -24,6 +25,7 @@ export function MyProfileThree() {
   function handleNext() {
     if (progress < 100) {
       setProgress(progress + 20);
+      navigation.navigate("myprofilefour");
     } else {
       navigation.goBack(); 
     }
@@ -52,9 +54,35 @@ export function MyProfileThree() {
             />
           </Center>
 
-          <Heading color="$orange500" fontSize={30}>
+          <Heading color="$orange500" fontSize={30} mb={20}>
             Quais são os grupos musculares deseja focar?
           </Heading>
+          
+          <HStack flexWrap="wrap" justifyContent="space-between" mb={10}>
+  <Box title="Balanceado" variant="outline" width="48%" mb={4}>
+    Recomendado
+  </Box>
+
+  <Box title="Peito" variant="outline" width="48%" mb={4}>
+  </Box>
+
+  <Box title="Costa" variant="outline" width="48%" mb={4}>
+  </Box>
+
+  <Box title="Braços" variant="outline" width="48%" mb={4}>
+  </Box>
+
+  <Box title="Pernas" variant="outline" width="48%" mb={4}>
+  </Box>
+
+  <Box title="Abdômen" variant="outline" width="48%" mb={4}>
+  </Box>
+
+  <Box title="Glúteos" variant="outline" width="48%" mb={4}>
+  </Box>
+</HStack>
+
+
           
 
           <Button

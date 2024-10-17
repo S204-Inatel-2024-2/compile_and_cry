@@ -12,6 +12,8 @@ import { Platform } from 'react-native';
 import { MyProfiletwo } from '@screens/MyProfileTwo';
 import { MyProfileThree } from '@screens/MyProfileThree';
 import { PersonalityTrainer } from '@screens/PersonalityTrainer';
+import { MyProfileFour } from '@screens/MyProfileFour';
+
 type AppRoutes = {
     home: undefined;
     exercise: undefined;
@@ -21,6 +23,7 @@ type AppRoutes = {
     myprofiletwo: undefined;
     myprofilethree: undefined;
     personalityTrainer: undefined;
+    myprofilefour: undefined
   }
   
   export type AppNavigatorRoutesProps = BottomTabNavigationProp<AppRoutes>;
@@ -44,6 +47,7 @@ export function AppRoutes() {
             paddingTop: tokens.space["6"],
         },
     }}>
+      
       <Screen 
         name='home'
         component={Home}
@@ -89,6 +93,15 @@ export function AppRoutes() {
             tabBarButton: () => null
         }}
       />
+
+      <Screen 
+        name='myprofilefour'
+        component={MyProfileFour}
+        options={{
+            tabBarButton: () => null
+        }}
+      />
+
       <Screen 
         name='personalityTrainer'
         component={PersonalityTrainer}

@@ -16,7 +16,7 @@ import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { useNavigation } from '@react-navigation/native';
 import { Box } from '@components/Box';
 
-export function MyProfiletwo() {
+export function MyProfileSix() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   const [progress, setProgress] = useState(0);
@@ -24,7 +24,7 @@ export function MyProfiletwo() {
   function handleNext() {
     if (progress < 100) {
       setProgress(progress + 20);
-      navigation.navigate("myprofilethree");
+      navigation.navigate("register")
     } else {
       navigation.goBack(); 
     }
@@ -43,7 +43,7 @@ export function MyProfiletwo() {
 
         <VStack flex={1} px="$10" pb="$16">
 
-          <Center gap="$2" mt={30} mb={30}>
+        <Center gap="$2" mt={30} mb={30}>
             <Heading color="$white">Meu Perfil</Heading>
             <Progress
               value={progress}
@@ -54,20 +54,20 @@ export function MyProfiletwo() {
           </Center>
 
           <Heading color="$orange500" fontSize={30} mb={20}>
-            Qual é o seu objetivo?
+            Deseja realizar exercícios de cardio?
           </Heading>
-          <Box title="Hipertrofia" variant="solid" mb={10}>
-            Aumento do volume muscular resultante do crescimento das fibras musculares.
+
+          <Heading color="$white" fontSize={15} mb={20}>
+            Exercícios na esteira, bicicleta, elíptico e semelhantes.
+          </Heading>
+
+          <Box title="Incluir cardio nos treinos" variant="solid" mb={10}>
+          Exercícios de cardio serão adicionados antes ou após os treinos.
           </Box>
 
-          <Box title="Definição Muscular" variant="solid" mb={10}>
-          Processo de reduzir a gordura corporal, tornando músculos mais visíveis e definidos.
+          <Box title="Não desejo a inclusão do cardio" variant="solid" mb={10}>
+          Exercícios de cardio não serão adicionados nos dias de treino.
           </Box>
-
-          <Box title="Emagrecer" variant="solid">
-          Redução da gordura corporal total.
-          </Box>
-
           
 
           <Button

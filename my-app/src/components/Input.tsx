@@ -8,6 +8,7 @@ export function Input({ ...props }: Props) {
     <GluestackInput
       bg="$white"
       h="$16"
+      w='$80'
       px="$4"
       borderWidth="$0"
       borderRadius="$xl"

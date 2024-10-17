@@ -16,20 +16,12 @@ import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 import { useNavigation } from '@react-navigation/native';
 import { Box } from '@components/Box';
 
-export function MyProfiletwo() {
+export function PremiunScreen() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
-
-  const [progress, setProgress] = useState(0);
-
-  function handleNext() {
-    if (progress < 100) {
-      setProgress(progress + 20);
-      navigation.navigate("myprofilethree");
-    } else {
-      navigation.goBack(); 
-    }
+  function handleNext(){
+    navigation.navigate("planosscreen");
   }
-
+  
   return (
     <VStack flex={1}>
       <VStack flex={1}>
@@ -44,34 +36,27 @@ export function MyProfiletwo() {
         <VStack flex={1} px="$10" pb="$16">
 
           <Center gap="$2" mt={30} mb={30}>
-            <Heading color="$white">Meu Perfil</Heading>
-            <Progress
-              value={progress}
-              w="$full"
-              h="$3"
-              mt="$4"
-            />
+            <Heading color="$white" fontSize={30} mb={20} textAlign='center'>
+                Exclusividade da versão Premium
+            </Heading>
           </Center>
 
-          <Heading color="$orange500" fontSize={30} mb={20}>
-            Qual é o seu objetivo?
-          </Heading>
-          <Box title="Hipertrofia" variant="solid" mb={10}>
-            Aumento do volume muscular resultante do crescimento das fibras musculares.
-          </Box>
-
-          <Box title="Definição Muscular" variant="solid" mb={10}>
-          Processo de reduzir a gordura corporal, tornando músculos mais visíveis e definidos.
-          </Box>
-
-          <Box title="Emagrecer" variant="solid">
-          Redução da gordura corporal total.
-          </Box>
-
+         
           
+          <Box title="Treine corretamente" variant="solid" mb={10}>
+          Temos diversos execícios com instruções para você treinar corretamente e otimizar seus resultados.
+          </Box>
+
+          <Box title="Parceiro de Treino" variant="solid" mb={10}>
+          Métricas para você acompanhar seu desempenho durante o treino.
+          </Box>
+
+          <Box title="Treino Personalizado" variant="solid" mb={10}>
+          Treino individualizados especialmente para você atingit seus objetivos.
+          </Box>
 
           <Button
-            title="Próximo"
+            title="Continuar"
             mt="$12"
             mb="$3"
             ml="$16"
