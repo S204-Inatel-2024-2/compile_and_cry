@@ -16,5 +16,8 @@ module.exports = (() => {
     sourceExts: [...resolver.sourceExts, 'svg'],
   }
 
+  // Adicionando preset do Babel para TypeScript
+  config.presets = ['module:metro-react-native-babel-preset', '@babel/preset-typescript']
+
   return config
 })()
