@@ -59,26 +59,25 @@ export function MyProfileThree() {
           </Heading>
           
           <HStack flexWrap="wrap" justifyContent="space-between" mb={10}>
-  <Box title="Balanceado" variant="outline" width="48%" mb={4}>
-    Recomendado
+  <Box title="Balanceado" variant="outline" width="100%" mb={4}>
   </Box>
 
-  <Box title="Peito" variant="outline" width="48%" mb={4}>
+  <Box title="Peito" variant="outline" width="100%" mb={4}>
   </Box>
 
-  <Box title="Costa" variant="outline" width="48%" mb={4}>
+  <Box title="Costa" variant="outline" width="100%" mb={4}>
   </Box>
 
-  <Box title="Braços" variant="outline" width="48%" mb={4}>
+  <Box title="Braços" variant="outline" width="100%" mb={4}>
   </Box>
 
-  <Box title="Pernas" variant="outline" width="48%" mb={4}>
+  <Box title="Pernas" variant="outline" width="100%" mb={4}>
   </Box>
 
-  <Box title="Abdômen" variant="outline" width="48%" mb={4}>
+  <Box title="Abdômen" variant="outline" width="100%" mb={4}>
   </Box>
 
-  <Box title="Glúteos" variant="outline" width="48%" mb={4}>
+  <Box title="Glúteos" variant="outline" width="100%" mb={4}>
   </Box>
 </HStack>
 

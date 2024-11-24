@@ -1,15 +1,10 @@
 import {
-    Center,
     Heading,
     Image,
-    ScrollView,
-    Text,
     VStack,
   } from '@gluestack-ui/themed';
   
   import BackgroundImg from '@assets/Backgroud.png';
-  import Logo from '@assets/Logo.png'; // If Logo is an image, use Image component
-  import { Input } from '@components/Input';
   import { Button } from '@components/Button';
   
   import { AuthNavigatorRoutesProps } from "@routes/auth.routes";

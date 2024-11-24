@@ -1,4 +1,6 @@
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { Config } from '@screens/ConfigConta';
+import { Exercise } from '@screens/Exercise';
 import { Home } from '@screens/Home';
 import { Initial } from '@screens/Initial';
 import { Login } from '@screens/Login';
@@ -10,9 +12,11 @@ import { MyProfiletwo } from '@screens/MyProfileTwo';
 import { PersonalityTrainer } from '@screens/PersonalityTrainer';
 import { PlanosScreen } from '@screens/PlanosScreen';
 import { PremiunScreen } from '@screens/PremiunScreen';
+import { Profile } from '@screens/Profile';
 import { Register } from '@screens/Register';
 import { SignIn } from '@screens/SignIn';
 import { SignUp } from '@screens/SignUp';
+import { Workouts } from '@screens/Workouts';
 
 type AuthRoutes = {
     signIn: undefined;
@@ -29,6 +33,10 @@ type AuthRoutes = {
     register: undefined
     planosscreen: undefined
     premiunscreen: undefined
+    profile: undefined
+    workouts: undefined
+    exercise: undefined
+    config: undefined
   }
   
   export type AuthNavigatorRoutesProps = NativeStackNavigationProp<AuthRoutes>;
@@ -98,6 +106,23 @@ type AuthRoutes = {
         name="premiunscreen"
         component={PremiunScreen}
       />
+      <Screen
+        name="profile"
+        component={Profile}
+      />
+      <Screen
+        name="workouts"
+        component={Workouts}
+      />
+      <Screen 
+        name="exercise"
+        component={Exercise}
+      />
+      <Screen
+        name='config'
+        component={Config}
+      />
+
     </Navigator>
   )
 }

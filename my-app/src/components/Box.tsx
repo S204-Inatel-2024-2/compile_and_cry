@@ -1,16 +1,18 @@
-import { Box as GluestackBox, Text } from '@gluestack-ui/themed';
+import { Box as GluestackBox, Pressable, Text } from '@gluestack-ui/themed';
 import { ComponentProps } from 'react';
 
 type Props = ComponentProps<typeof GluestackBox> & {
   children?: React.ReactNode;
   variant?: 'solid' | 'outline' | 'tamanho';
   title?: string;
+  onPress?: () => void;
 };
 
-export function Box({ children,title, variant = 'solid', ...props }: Props) {
+export function Box({ children,title, onPress, variant = 'solid', ...props }: Props) {
   return (
-    <GluestackBox
-      w={variant === "solid" ? '$full' : '$56'}
+    <Pressable onPress={onPress}>
+    <GluestackBox 
+      w={variant === "solid" ? '$full' : '$72'}
       bg={variant === 'solid' ? '$trueGray700' : '$trueGray700'}
       borderWidth={variant === 'outline' ? '$1' : '$0'}
       borderColor={variant === 'outline' ? '$gray400' : 'transparent'}
@@ -37,5 +39,6 @@ export function Box({ children,title, variant = 'solid', ...props }: Props) {
         {children}
       </Text>
     </GluestackBox>
+    </Pressable>
   );
 }
