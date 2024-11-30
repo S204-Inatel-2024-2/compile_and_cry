@@ -8,7 +8,6 @@ import { api } from '@services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthNavigatorRoutesProps } from "@routes/auth.routes";
 
-// Definindo o tipo de objetivos possíveis
 type Objective = 'Perda de Peso' | 'Ganho de Massa Muscular' | 'hipertrofia';
 
 export function Home() {
@@ -18,10 +17,10 @@ export function Home() {
     navigation.navigate("workouts");
   }
 
-  const [loading, setLoading] = useState(false); // Estado de carregamento
-  const [workoutName, setWorkoutName] = useState<string>(''); // Estado para armazenar o nome do treino
-  const [objective, setObjective] = useState<Objective | null>(null); // Estado para armazenar o objetivo
-  const [workoutCreated, setWorkoutCreated] = useState(false); // Estado para verificar se o workout foi criado
+  const [loading, setLoading] = useState(false);
+  const [workoutName, setWorkoutName] = useState<string>(''); 
+  const [objective, setObjective] = useState<Objective | null>(null); 
+  const [workoutCreated, setWorkoutCreated] = useState(false); 
   const [hasWorkout, setHasWorkout] = useState(false); 
 
   // Função para pegar o token de autenticação
@@ -35,7 +34,6 @@ export function Home() {
     }
   };
 
-  // Função para pegar as preferências do usuário do AsyncStorage
   const getUserPreferences = async () => {
     try {
       const cardio = await AsyncStorage.getItem('@selectedCardio');
@@ -51,10 +49,10 @@ export function Home() {
 
       
       return {
-        cardio: cardio === 'true', // Supondo que as seleções sejam booleanas
+        cardio: cardio === 'true',
         gym: gym,
         experience: experience,
-        groups: JSON.parse(groups || '[]'), // Assumindo que é uma lista de grupos musculares
+        groups: JSON.parse(groups || '[]'), 
       };
     } catch (error) {
       console.error('Erro ao obter preferências:', error);
@@ -64,7 +62,6 @@ export function Home() {
 
   
 
-  // Função para selecionar os exercícios com base nas preferências do usuário
   async function getExercisesForPreferences() {
     const preferences = await getUserPreferences();
 
@@ -129,7 +126,6 @@ export function Home() {
     return exercises.slice(0, 10);
   }
 
-  // Função para criar a rotina de treino
   async function createWorkoutRoutine() {
     setLoading(true);
 
@@ -143,7 +139,6 @@ export function Home() {
 
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
-      // Obter o userId através da rota /me
       const userResponse = await api.get('/me');
       const userId = userResponse.data.user.id;
       const userObjective = userResponse.data.user.objective;
@@ -154,9 +149,8 @@ export function Home() {
         return;
       }
 
-      // Criar a rotina de treino
       const workoutResponse = await api.post(`/workout/${userId}/workouts`, {
-        name: 'Treino Personalizado', // Nome do treino
+        name: 'Treino Personalizado', 
         objective: userObjective
       });
       
@@ -168,7 +162,6 @@ export function Home() {
       
       
 
-      // Obter a lista de exercícios baseados nas preferências
       const exerciseData = await getExercisesForPreferences();
       
       const preferences = await getUserPreferences();
@@ -188,7 +181,6 @@ export function Home() {
       const exerciseResponses = await Promise.all(exercisePromises);
       const exerciseIds = exerciseResponses.map(response => response.data.Exercise.id_exercise);
 
-      // Salvar exercícios no AsyncStorage
       const exercises = exerciseResponses.map(response => ({
         name: response.data.Exercise.name,
         description: response.data.Exercise.description
@@ -200,17 +192,11 @@ export function Home() {
       // Relacionar os exercícios com o workout
       const relationPromises = exerciseIds.map(exerciseId =>
         api.post(`/workoutExercise/${exerciseId}/${workoutId}`, {
-          series: 3,         // Número de séries
-          repetitions: 12,   // Número de repetições por série
-          rest: 60           // Tempo de descanso em segundos
+          series: 3,         
+          repetitions: 12,   
+          rest: 60           
         })
-        // .then(response => {
-        //   console.log(`Post para o exercício ${exerciseId} foi bem-sucedido!`);
-        //   return response;
-        // })
-        // .catch(error => {
-        //   console.error(`Erro ao criar workoutExercise para o exercício ${exerciseId}:`, error);
-        // })
+
         
       );
 
@@ -218,7 +204,7 @@ export function Home() {
 
       
       alert('Rotina de treino criada com sucesso!');
-      setWorkoutCreated(true); // Marca que a rotina foi criada com sucesso
+      setWorkoutCreated(true); 
 
     } catch (error) {
       console.error('Erro ao criar rotina:', error.response || error.message);
@@ -230,10 +216,9 @@ export function Home() {
 
   return (
     <VStack flex={1} bg="$gray800">
-      {/* Cabeçalho da Home */}
       <HomeHeader
         title="Treinos"
-        userPhotoUri="https://github.com/luanrobert07.png" // Foto do usuário (você pode substituir isso por algo dinâmico)
+        userPhotoUri="https://github.com/luanrobert07.png" 
       />
 
       <Divider bg="$gray400" />
@@ -249,7 +234,6 @@ export function Home() {
         Meu Plano
       </Heading>
 
-      {/* Box de treino */}
       {workoutCreated && (
         <WorkoutBox
           onPress={handleWorkout}
@@ -264,7 +248,6 @@ export function Home() {
         </WorkoutBox>
       )}
 
-      {/* Botão para criar rotina */}
       <Button
         title={loading ? "Criando..." : "Criar uma nova rotina de treino"}
         mt="$12"
