@@ -22,6 +22,7 @@ export function Home() {
   const [workoutName, setWorkoutName] = useState<string>(''); // Estado para armazenar o nome do treino
   const [objective, setObjective] = useState<Objective | null>(null); // Estado para armazenar o objetivo
   const [workoutCreated, setWorkoutCreated] = useState(false); // Estado para verificar se o workout foi criado
+  const [hasWorkout, setHasWorkout] = useState(false); 
 
   // Função para pegar o token de autenticação
   const getAuthToken = async () => {
@@ -34,7 +35,101 @@ export function Home() {
     }
   };
 
-  // Função para criar a rotina de treino com exercícios
+  // Função para pegar as preferências do usuário do AsyncStorage
+  const getUserPreferences = async () => {
+    try {
+      const cardio = await AsyncStorage.getItem('@selectedCardio');
+      const gym = await AsyncStorage.getItem('@selectedGym');
+      const experience = await AsyncStorage.getItem('@selectedExperience');
+      const groups = await AsyncStorage.getItem('@selectedGroups');
+
+      console.log("Cardio:", cardio);
+      console.log("Gym:", gym);
+      console.log("Experience:", experience);
+      console.log("Groups:", groups);
+      AsyncStorage.getAllKeys().then(keys => console.log("Chaves armazenadas:", keys));
+
+      
+      return {
+        cardio: cardio === 'true', // Supondo que as seleções sejam booleanas
+        gym: gym,
+        experience: experience,
+        groups: JSON.parse(groups || '[]'), // Assumindo que é uma lista de grupos musculares
+      };
+    } catch (error) {
+      console.error('Erro ao obter preferências:', error);
+      return null;
+    }
+  };
+
+  
+
+  // Função para selecionar os exercícios com base nas preferências do usuário
+  async function getExercisesForPreferences() {
+    const preferences = await getUserPreferences();
+
+    if (!preferences) {
+      return [];
+    }
+
+    const { cardio, gym, experience, groups } = preferences;
+    const exercises = [];
+
+    if (cardio) {
+      exercises.push(
+        { name: 'Corrida', description: 'Exercício cardio simples', difficulty: 'BEGINNER', requires_equipment: false },
+        { name: 'Burpees', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: false }
+      );
+    }
+
+    if (gym === 'home') {
+      exercises.push(
+        { name: 'Flexão', description: 'Exercício de peito', difficulty: 'BEGINNER', requires_equipment: false },
+        { name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: false }
+      );
+    } else if (gym === 'gym') {
+      exercises.push(
+        { name: 'Supino', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Puxada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true }
+      );
+    }
+
+    if (experience === 'beginner') {
+      exercises.push(
+        { name: 'Flexão', description: 'Exercício para iniciantes', difficulty: 'BEGINNER', requires_equipment: false },
+        { name: 'Abdominais', description: 'Exercício de core', difficulty: 'BEGINNER', requires_equipment: false }
+      );
+    } else if (experience === 'intermediate') {
+      exercises.push(
+        { name: 'Remada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Agachamento com peso', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true }
+      );
+    } else if (experience === 'advanced') {
+      exercises.push(
+        { name: 'Levantamento Terra', description: 'Exercício de força', difficulty: 'ADVANCED', requires_equipment: true },
+        { name: 'Puxada com pesos', description: 'Exercício de costas', difficulty: 'ADVANCED', requires_equipment: true }
+      );
+    }
+
+    if (groups.includes('Peito')) {
+      exercises.push({ name: 'Supino', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true });
+    }
+
+    if (groups.includes('Pernas')) {
+      exercises.push({ name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      
+    }
+
+    if (groups.includes('Braços')) {
+      exercises.push({ name: 'teste1', description: 'test1', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'teste2', description: 'teste2', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'teste3', description: 'teste3', difficulty: 'INTERMEDIATE', requires_equipment: true });
+    }
+
+    return exercises.slice(0, 10);
+  }
+
+  // Função para criar a rotina de treino
   async function createWorkoutRoutine() {
     setLoading(true);
 
@@ -46,46 +141,61 @@ export function Home() {
         return;
       }
 
-      // Adiciona o token no cabeçalho da requisição
       api.defaults.headers.Authorization = `Bearer ${token}`;
 
-      // Obter o userId e objetivo através da rota /me
+      // Obter o userId através da rota /me
       const userResponse = await api.get('/me');
-      const userId = userResponse.data.user.id; // Extrair o userId da resposta
-      const userObjective: Objective = userResponse.data.user.objective; // Extrair o objetivo do usuário
+      const userId = userResponse.data.user.id;
+      const userObjective = userResponse.data.user.objective;
+      setObjective(userObjective);
 
-      if (!userId || !userObjective) {
-        alert('Você precisa estar logado e ter um objetivo definido para criar uma rotina.');
+      if (!userId) {
+        alert('Você precisa estar logado para criar uma rotina.');
         return;
       }
 
-      // Criar o workout (treino)
+      // Criar a rotina de treino
       const workoutResponse = await api.post(`/workout/${userId}/workouts`, {
-        name: 'Segunda',
-        objective: userObjective,
+        name: 'Treino Personalizado', // Nome do treino
+        objective: userObjective
       });
+      
 
-      const workoutId = workoutResponse.data.Workout.id_workout; // ID do workout criado
-      console.log('Workout ID:', workoutId);
-
-      // Atualizar o nome do treino e o objetivo
+      const workoutId = workoutResponse.data.Workout.id_workout;
       setWorkoutName(workoutResponse.data.Workout.name);
-      setObjective(userObjective);
 
-      // Gerar exercícios baseados no objetivo do usuário
-      const exerciseData = getExercisesForObjective(userObjective);
+      console.log("Id do treino:", workoutId)
+      
+      
+
+      // Obter a lista de exercícios baseados nas preferências
+      const exerciseData = await getExercisesForPreferences();
+      
+      const preferences = await getUserPreferences();
+      
+
+
+
 
       const exercisePromises = exerciseData.map(exercise =>
         api.post('/exercises', exercise)
       );
 
-      
 
-      // Esperar todas as requisições de criação de exercícios terminarem
+
+
+
       const exerciseResponses = await Promise.all(exercisePromises);
       const exerciseIds = exerciseResponses.map(response => response.data.Exercise.id_exercise);
-      console.log('Exercise IDs:', exerciseIds);
-      
+
+      // Salvar exercícios no AsyncStorage
+      const exercises = exerciseResponses.map(response => ({
+        name: response.data.Exercise.name,
+        description: response.data.Exercise.description
+      }));
+
+      await AsyncStorage.setItem('@exercises', JSON.stringify(exercises));
+      console.log('Exercícios salvos com sucesso');
 
       // Relacionar os exercícios com o workout
       const relationPromises = exerciseIds.map(exerciseId =>
@@ -94,12 +204,19 @@ export function Home() {
           repetitions: 12,   // Número de repetições por série
           rest: 60           // Tempo de descanso em segundos
         })
+        // .then(response => {
+        //   console.log(`Post para o exercício ${exerciseId} foi bem-sucedido!`);
+        //   return response;
+        // })
+        // .catch(error => {
+        //   console.error(`Erro ao criar workoutExercise para o exercício ${exerciseId}:`, error);
+        // })
+        
       );
 
-      // Aguardar todas as associações serem feitas
       await Promise.all(relationPromises);
 
-      console.log('Rotina de treino criada com sucesso!');
+      
       alert('Rotina de treino criada com sucesso!');
       setWorkoutCreated(true); // Marca que a rotina foi criada com sucesso
 
@@ -109,33 +226,6 @@ export function Home() {
     } finally {
       setLoading(false);
     }
-  }
-
-  // Função para selecionar exercícios de acordo com o objetivo
-  function getExercisesForObjective(objective: Objective) {
-    const exercises = {
-      "Perda de Peso": [
-        { name: 'Flexão', description: 'Flexão reto', difficulty: 'BEGINNER', requires_equipment: false },
-        { name: 'Burpees', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: false },
-        { name: 'Saltos no banco', description: 'Exercício cardio para pernas', difficulty: 'INTERMEDIATE', requires_equipment: true },
-        // Adicione mais exercícios para o objetivo de perda de peso
-      ],
-      "Ganho de Massa Muscular": [
-        { name: 'Supino', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
-        { name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'ADVANCED', requires_equipment: true },
-        { name: 'Remada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true },
-        // Adicione mais exercícios para ganho de massa muscular
-      ],
-      "hipertrofia": [
-        { name: 'Levantamento terra', description: 'Exercício de força total', difficulty: 'ADVANCED', requires_equipment: true },
-        { name: 'Puxada frontal', description: 'Exercício para costas', difficulty: 'ADVANCED', requires_equipment: true },
-        { name: 'Flexão com pesos', description: 'Flexão de braço com peso adicional', difficulty: 'ADVANCED', requires_equipment: true },
-        // Adicione mais exercícios para o objetivo de força
-      ],
-      // Adicione outros objetivos aqui conforme necessário
-    };
-
-    return exercises[objective] || []; // Retorna uma lista vazia caso o objetivo não seja encontrado
   }
 
   return (
@@ -177,11 +267,15 @@ export function Home() {
       {/* Botão para criar rotina */}
       <Button
         title={loading ? "Criando..." : "Criar uma nova rotina de treino"}
-        mt="$96"
+        mt="$12"
         mb="$3"
         ml="$16"
+        position="absolute"
+        bottom={0}
+        left="50%"
+        transform="translateX(-70%)"
         variant="outline"
-        onPress={createWorkoutRoutine} // Chama a função de criação de rotina
+        onPress={createWorkoutRoutine}
         isDisabled={loading}
       />
     </VStack>

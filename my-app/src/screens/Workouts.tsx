@@ -1,46 +1,66 @@
-import { ExerciseCard } from '@components/ExerciseCard'
-import { HomeHeader } from '@components/HomeHeader'
-import { Center, Divider, Text } from '@gluestack-ui/themed'
+import React, { useEffect, useState } from 'react';
+import { ExerciseCard } from '@components/ExerciseCard';
+import { HomeHeader } from '@components/HomeHeader';
+import { Center, Divider, Text } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export function Workouts() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
+  const [exercises, setExercises] = useState<{ name: string; description: string }[]>([]);
+
+  useEffect(() => {
+    // Função para recuperar os dados do AsyncStorage
+    async function fetchExercises() {
+      try {
+        const savedExercises = await AsyncStorage.getItem('@exercises');
+        console.log('Dados recuperados do AsyncStorage:', savedExercises); // Verifique o formato dos dados
+
+        if (savedExercises !== null) {
+          // Se os exercícios foram salvos no AsyncStorage, converta para JSON
+          const exercisesData = JSON.parse(savedExercises);
+          console.log('Exercícios convertidos:', exercisesData); // Verifique os dados após a conversão
+          setExercises(exercisesData); // Atualiza o estado com os dados recuperados
+        }
+      } catch (error) {
+        console.error('Erro ao recuperar exercícios:', error);
+      }
+    }
+
+    fetchExercises();
+  }, []);
 
   function handleToExercise() {
-    navigation.navigate("exercise");
+    navigation.navigate('exercise');
   }
 
   return (
     <>
-         
-    <HomeHeader showBackButton={true} title='Treino Personalizado'  ></HomeHeader>
-    <Center flex={1}>
-      <Center>
-      <Text pr={260} pb={20} color="white" >Exercícios</Text>
-      <Divider bg="$gray400" mb={20}/>
-        <ExerciseCard
-         onPress= {handleToExercise} 
-         title="Supino inclinado" 
-         variant="solid" mb={20} 
-         children="Treine" 
-         imageUrl='https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png'
-        />
-
-        <ExerciseCard
-          title="Supino inclinado" variant="solid" mb={20} children="Treine" imageUrl='https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png'
-        />
-        <ExerciseCard
-          title="Supino inclinado" variant="solid" mb={20} children="Treine" imageUrl='https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png'
-        />
-        <ExerciseCard
-          title="Supino inclinado" variant="solid" mb={20} children="Treine" imageUrl='https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png'
-        />
-      </Center>
-      <ExerciseCard
-        title="Supino inclinado" variant="solid" mb={10} children="Treine" imageUrl='https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png'
-      />
-    </Center>
+      <HomeHeader showBackButton={true} title="Treino Personalizado" />
+          <Center>
+            <Text pb={20} mt={40} color="white">
+              Exercícios
+            </Text>
+          </Center>
+          <Divider bg="$gray400" mb={20} />
+          <Center>
+          {exercises.length === 0 ? (
+            <Text color="white">Nenhum exercício disponível</Text> // Caso não haja exercícios
+          ) : (
+            exercises.map((exercise, index) => (
+              <ExerciseCard
+                key={index}
+                onPress={handleToExercise}
+                title={exercise.name} // Usando o name como title
+                variant="solid"
+                mb={20}
+                children={exercise.description} // Usando description como children
+                imageUrl="https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png"
+              />
+            ))
+          )}
+          </Center>
     </>
-  )
+  );
 }

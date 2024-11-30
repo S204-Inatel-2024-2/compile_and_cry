@@ -42,9 +42,13 @@ export function PersonalityTrainer() {
 
           <Button
             title="Próximo"
-            mt="$56"
+            mt="$12"
             mb="$3"
             ml="$16"
+            position="absolute"
+            bottom={0}
+            left="50%"
+            transform="translateX(-70%)"
             onPress={handleNewAccont} />
         </VStack>
       </VStack>

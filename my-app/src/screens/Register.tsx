@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Center, Heading, Image, VStack } from '@gluestack-ui/themed';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import BackgroundImg from '@assets/Backgroud.png';
 import Logo from '@assets/Logo.png';
 import { Input } from '@components/Input';
@@ -12,15 +13,46 @@ export function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [height, setHeight] = useState('');
+  const [weight, setWeight] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [objective, setObjective] = useState(''); // Para carregar do AsyncStorage
   const [loading, setLoading] = useState(false);
 
   const navigation = useNavigation();
 
-  // Informações estáticas
-  const height = "1.73";
-  const weight = "60";
-  const dateOfBirth = "2020-10-09";
-  const objective = "hipertrofia";
+  // Função para carregar dados do AsyncStorage
+  const loadUserMetrics = async () => {
+    try {
+      const storedFormData = await AsyncStorage.getItem('@formData');
+      const storedObjective = await AsyncStorage.getItem('@objective');
+
+      if (storedFormData) {
+        const parsedData = JSON.parse(storedFormData);
+        setHeight(parsedData.height);
+        setWeight(parsedData.weight);
+        setDateOfBirth(parsedData.birthDate);
+      }
+
+      if (storedObjective) {
+        setObjective(storedObjective);
+      }
+
+      // Log dos dados carregados
+      console.log('Dados carregados do AsyncStorage:', {
+        height,
+        weight,
+        dateOfBirth,
+        objective: storedObjective,
+      });
+    } catch (error) {
+      console.error('Erro ao carregar dados do AsyncStorage:', error);
+    }
+  };
+
+  useEffect(() => {
+    loadUserMetrics();
+  }, []);
 
   async function handleRegister() {
     if (!name || !email || !password || !confirmPassword) {
@@ -42,19 +74,19 @@ export function Register() {
         height,
         weight,
         date_of_birth: dateOfBirth,
-        objective
+        objective, // Valor dinâmico do objetivo
       });
       console.log('Resposta da API:', response.data);
       alert('Cadastro realizado com sucesso!');
-      
+
       // Limpar os campos após o cadastro bem-sucedido
       setName('');
       setEmail('');
       setPassword('');
       setConfirmPassword('');
-      
+
       // Navegar para a tela de login após o cadastro
-      navigation.navigate('home');
+      navigation.navigate('login');
     } catch (error) {
       console.error(error);
       alert('Não foi possível realizar o cadastro. Verifique os dados.');
@@ -78,14 +110,8 @@ export function Register() {
           <Image w="$2/3" h="$64" source={Logo} alt="Logo" />
         </Center>
         <Center gap="$6">
-          <Heading color="$orange500" paddingBottom={20}>
-            Crie sua conta agora!
-          </Heading>
-          <Input
-            placeholder="Nome"
-            value={name}
-            onChangeText={setName}
-          />
+          <Heading color="$orange500">Crie sua conta agora!</Heading>
+          <Input placeholder="Nome" value={name} onChangeText={setName} />
           <Input
             placeholder="E-mail"
             keyboardType="email-address"

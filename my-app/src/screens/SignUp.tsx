@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Center,
   Heading,
@@ -6,6 +6,8 @@ import {
   VStack,
   Progress,
 } from '@gluestack-ui/themed';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import BackgroundImg from '@assets/Backgroud.png';
 import { Input } from '@components/Input';
@@ -26,12 +28,53 @@ export function SignUp() {
     weightGoal: '',
   });
 
+  // Função para salvar os dados no AsyncStorage
+  const saveData = async () => {
+    try {
+      await AsyncStorage.setItem('@formData', JSON.stringify(formData));
+      console.log('Dados salvos no AsyncStorage');
+    } catch (error) {
+      console.error('Erro ao salvar dados:', error);
+    }
+  };
+
+  // Função para carregar os dados do AsyncStorage
+  const loadData = async () => {
+    try {
+      const storedData = await AsyncStorage.getItem('@formData');
+      if (storedData) {
+        setFormData(JSON.parse(storedData));
+        console.log('Dados carregados do AsyncStorage');
+      }
+    } catch (error) {
+      console.error('Erro ao carregar dados:', error);
+    }
+  };
+
+  // Carregar os dados ao iniciar
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  // Função para resetar os campos do formulário
+  const resetForm = () => {
+    setFormData({
+      sex: '',
+      birthDate: '',
+      weight: '',
+      height: '',
+      weightGoal: '',
+    });
+  };
+
   const handleNext = () => {
     if (progress < 100) {
+      saveData(); // Salvar os dados antes de navegar
       setProgress(progress + 20);
+      resetForm(); // Resetar os campos do formulário
       navigation.navigate("personalityTrainer");
     } else {
-      navigation.goBack(); 
+      navigation.goBack();
     }
   };
 

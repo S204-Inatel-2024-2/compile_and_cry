@@ -43,11 +43,11 @@ export function PremiunScreen() {
 
          
           
-          <Box title="Treine corretamente" variant="solid" mb={10}>
+          <Box title="Treine corretamente" variant="solid" mb={100} mt={50}>
           Temos diversos execícios com instruções para você treinar corretamente e otimizar seus resultados.
           </Box>
 
-          <Box title="Parceiro de Treino" variant="solid" mb={10}>
+          <Box title="Parceiro de Treino" variant="solid" mb={100}>
           Métricas para você acompanhar seu desempenho durante o treino.
           </Box>
 
@@ -60,6 +60,10 @@ export function PremiunScreen() {
             mt="$12"
             mb="$3"
             ml="$16"
+            position="absolute"
+            bottom={0}
+            left="50%"
+            transform="translateX(-70%)"
             onPress={handleNext} 
           />
         </VStack>

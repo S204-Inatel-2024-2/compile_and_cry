@@ -39,9 +39,9 @@ export function WorkoutBox({
           </Text>
         )}
 
-        <Heading mt={10} color="$gray" fontFamily="$body" fontSize="$lg">
+        {/* <Heading mt={10} color="$gray" fontFamily="$body" fontSize="$lg">
           Progresso {progress} %
-        </Heading>
+        </Heading> */}
 
         {/* Progress Bar */}
         <GluestackBox w="100%" h="$2" bg="$gray600" rounded="$full" overflow="hidden" mb="$4">

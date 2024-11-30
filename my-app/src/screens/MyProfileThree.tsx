@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   Center,
   Heading,
@@ -21,13 +22,38 @@ export function MyProfileThree() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
 
   const [progress, setProgress] = useState(0);
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]); // Track selected muscle groups
 
+  // Function to handle group selection
+  const handleGroupSelection = async (group: string) => {
+    setSelectedGroups(prevState => {
+      const newSelection = prevState.includes(group)
+        ? prevState.filter(item => item !== group) // Deselect if already selected
+        : [...prevState, group]; // Select if not already selected
+
+      // Save the updated selection in AsyncStorage
+      AsyncStorage.setItem('@selectedGroups', JSON.stringify(newSelection));
+      return newSelection;
+    });
+  };
+
+  // Function to get the style of the box based on selection
+  const getBoxStyle = (group: string) => {
+    return selectedGroups.includes(group) ? { backgroundColor: '#f97316' } : {}; // Highlight if selected
+  };
+
+  // Function to handle button press
   function handleNext() {
+    if (selectedGroups.length === 0) {
+      alert('Por favor, selecione pelo menos um grupo muscular.');
+      return;
+    }
+
     if (progress < 100) {
       setProgress(progress + 20);
       navigation.navigate("myprofilefour");
     } else {
-      navigation.goBack(); 
+      navigation.goBack();
     }
   }
 
@@ -44,7 +70,7 @@ export function MyProfileThree() {
 
         <VStack flex={1} px="$10" pb="$16">
 
-        <Center gap="$2" mt={30} mb={30}>
+          <Center gap="$2" mt={30} mb={30}>
             <Heading color="$white">Meu Perfil</Heading>
             <Progress
               value={progress}
@@ -57,31 +83,22 @@ export function MyProfileThree() {
           <Heading color="$orange500" fontSize={30} mb={20}>
             Quais são os grupos musculares deseja focar?
           </Heading>
-          
-          <HStack flexWrap="wrap" justifyContent="space-between" mb={10}>
-  <Box title="Balanceado" variant="outline" width="100%" mb={4}>
-  </Box>
 
-  <Box title="Peito" variant="outline" width="100%" mb={4}>
-  </Box>
-
-  <Box title="Costa" variant="outline" width="100%" mb={4}>
-  </Box>
-
-  <Box title="Braços" variant="outline" width="100%" mb={4}>
-  </Box>
-
-  <Box title="Pernas" variant="outline" width="100%" mb={4}>
-  </Box>
-
-  <Box title="Abdômen" variant="outline" width="100%" mb={4}>
-  </Box>
-
-  <Box title="Glúteos" variant="outline" width="100%" mb={4}>
-  </Box>
-</HStack>
-
-
+          <Center>
+            <HStack flexWrap="wrap" justifyContent="space-between" mb={10}>
+              {['Balanceado', 'Peito', 'Costa', 'Braços', 'Pernas', 'Abdômen', 'Glúteos'].map((group) => (
+                <Box
+                  key={group}
+                  title={group}
+                  variant="outline"
+                  mb={4}
+                  ml={30}
+                  onPress={() => handleGroupSelection(group)} // Handle group selection
+                  style={getBoxStyle(group)} // Apply style if selected
+                />
+              ))}
+            </HStack>
+          </Center>
           
 
           <Button
@@ -89,7 +106,12 @@ export function MyProfileThree() {
             mt="$12"
             mb="$3"
             ml="$16"
-            onPress={handleNext} 
+            position="absolute"
+            bottom={0}
+            left="50%"
+            transform="translateX(-70%)"
+            onPress={handleNext}
+            disabled={selectedGroups.length === 0} // Disable button if no group selected
           />
         </VStack>
       </VStack>

@@ -11,6 +11,7 @@ import { MyProfileThree } from '@screens/MyProfileThree';
 import { MyProfiletwo } from '@screens/MyProfileTwo';
 import { PersonalityTrainer } from '@screens/PersonalityTrainer';
 import { PlanosScreen } from '@screens/PlanosScreen';
+import { PremiumScreenDetail } from '@screens/PremiumScreenDetail';
 import { PremiunScreen } from '@screens/PremiunScreen';
 import { Profile } from '@screens/Profile';
 import { Register } from '@screens/Register';
@@ -37,6 +38,7 @@ type AuthRoutes = {
     workouts: undefined
     exercise: undefined
     config: undefined
+    premiumscreendetail: undefined
   }
   
   export type AuthNavigatorRoutesProps = NativeStackNavigationProp<AuthRoutes>;
@@ -121,6 +123,10 @@ type AuthRoutes = {
       <Screen
         name='config'
         component={Config}
+      />
+      <Screen
+        name='premiumscreendetail'
+        component={PremiumScreenDetail}
       />
 
     </Navigator>
