@@ -5,6 +5,7 @@ import Logo from '@assets/Logo.png';
 import { Input } from '@components/Input';
 import { Button } from '@components/Button';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { api } from '@services/api';
 
 export function Login() {
@@ -23,13 +24,15 @@ export function Login() {
   
     try {
       const response = await api.post('/sessions', { email, password });
-      console.log('Resposta da API:', response.data);
+  
+      // Salvar o token no AsyncStorage
+      await AsyncStorage.setItem('@token', response.data.token);
       alert('Login realizado com sucesso!');
-      
+  
       // Limpar os campos de entrada após login bem-sucedido
       setEmail('');
       setPassword('');
-      
+  
       navigation.navigate('home');
     } catch (error) {
       console.error(error);
@@ -38,7 +41,7 @@ export function Login() {
       setLoading(false);
     }
   }
-  
+
   return (
     <VStack flex={1}>
       <Image
