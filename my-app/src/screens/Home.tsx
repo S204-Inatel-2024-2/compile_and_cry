@@ -75,52 +75,116 @@ export function Home() {
     if (cardio) {
       exercises.push(
         { name: 'Corrida', description: 'Exercício cardio simples', difficulty: 'BEGINNER', requires_equipment: false },
-        { name: 'Burpees', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: false }
+        { name: 'Burpees', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: false },
+        { name: 'Pular Corda', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Bicicleta', description: 'Exercício cardio simples', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Polichinelo', description: 'Exercício cardio simples', difficulty: 'INTERMEDIATE', requires_equipment: false }
       );
     }
 
     if (gym === 'home') {
       exercises.push(
         { name: 'Flexão', description: 'Exercício de peito', difficulty: 'BEGINNER', requires_equipment: false },
-        { name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: false }
+        { name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: false }, 
+        { name: 'Tríceps na Corda', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true }, 
+        { name: 'Prancha', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false }, 
+        { name: 'Abdominal Estrela', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false }, 
+        { name: 'Polichinelo', description: 'Exercício cardio simples', difficulty: 'BEGINNER', requires_equipment: false },
+        { name: 'Abdômen Supra', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false }
       );
     } else if (gym === 'gym') {
       exercises.push(
         { name: 'Supino', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
-        { name: 'Puxada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true }
+        {name: 'Crucifixo', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        {name: 'Flexão', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Puxada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true }, 
+        { name: 'Remada', description: 'Exercício de costas', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Bíceps com Halteres', description: 'Exercício de peito', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Agachamento Livre', description: 'Exercício de pernas', difficulty: 'BEGINNER', requires_equipment: false }, 
+        { name: 'Stiff', description: 'Exercício de pernas', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Elevação Lateral', description: 'Exercício de braços', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Elevação Lateral', description: 'Exercício de ombros', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Leg Press', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Cadeira Extensora', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Cadeira Flexora', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true }, 
+        { name: 'Abdômen Supra', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false }     
       );
     }
 
     if (experience === 'beginner') {
       exercises.push(
         { name: 'Flexão', description: 'Exercício para iniciantes', difficulty: 'BEGINNER', requires_equipment: false },
-        { name: 'Abdominais', description: 'Exercício de core', difficulty: 'BEGINNER', requires_equipment: false }
+        { name: 'Corrida', description: 'Exercício cardio simples', difficulty: 'BEGINNER', requires_equipment: false },
+        { name: 'Polichinelo', description: 'Exercício cardio simples', difficulty: 'BEGINNER', requires_equipment: false },
+        { name: 'Remada', description: 'Exercício de costas', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Bíceps com Halteres', description: 'Exercício de braços', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Agachamento Livre', description: 'Exercício de pernas', difficulty: 'BEGINNER', requires_equipment: false }, 
+        { name: 'Stiff', description: 'Exercício de pernas', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Elevação Lateral', description: 'Exercício de braços', difficulty: 'BEGINNER', requires_equipment: true },
+        { name: 'Elevação Lateral', description: 'Exercício de ombros', difficulty: 'BEGINNER', requires_equipment: true }
       );
     } else if (experience === 'intermediate') {
       exercises.push(
         { name: 'Remada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true },
-        { name: 'Agachamento com peso', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true }
+        { name: 'Agachamento com peso', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Burpees', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: false },
+        { name: 'Pular Corda', description: 'Exercício cardio intenso', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Bicicleta', description: 'Exercício cardio simples', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Polichinelo', description: 'Exercício cardio simples', difficulty: 'INTERMEDIATE', requires_equipment: false },
+        { name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: false }, 
+        { name: 'Tríceps na Corda', description: 'Exercício de braços', difficulty: 'INTERMEDIATE', requires_equipment: true },     
+        { name: 'Supino', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        {name: 'Crucifixo', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        {name: 'Flexão', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Puxada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true }, 
+        { name: 'Leg Press', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Cadeira Extensora', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true },
+        { name: 'Cadeira Flexora', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true }
       );
     } else if (experience === 'advanced') {
       exercises.push(
         { name: 'Levantamento Terra', description: 'Exercício de força', difficulty: 'ADVANCED', requires_equipment: true },
-        { name: 'Puxada com pesos', description: 'Exercício de costas', difficulty: 'ADVANCED', requires_equipment: true }
+        { name: 'Puxada com pesos', description: 'Exercício de costas', difficulty: 'ADVANCED', requires_equipment: true },
+        { name: 'Abdominal Estrela', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false }, 
+        { name: 'Prancha', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false },
+        { name: 'Abdômen Supra', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false }
       );
     }
 
     if (groups.includes('Peito')) {
       exercises.push({ name: 'Supino', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({name: 'Crucifixo', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({name: 'Flexão', description: 'Exercício de peito', difficulty: 'INTERMEDIATE', requires_equipment: true });
     }
 
     if (groups.includes('Pernas')) {
       exercises.push({ name: 'Agachamento', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true });
-      
+      exercises.push({ name: 'Leg Press', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'Cadeira Extensora', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'Cadeira Flexora', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true});
+      exercises.push({ name: 'Agachamento com peso', description: 'Exercício de pernas', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'Agachamento Livre', description: 'Exercício de pernas', difficulty: 'BEGINNER', requires_equipment: false }); 
     }
 
     if (groups.includes('Braços')) {
-      exercises.push({ name: 'teste1', description: 'test1', difficulty: 'INTERMEDIATE', requires_equipment: true });
-      exercises.push({ name: 'teste2', description: 'teste2', difficulty: 'INTERMEDIATE', requires_equipment: true });
-      exercises.push({ name: 'teste3', description: 'teste3', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'Bíceps com Halteres', description: 'Exercício de braços', difficulty: 'BEGINNER', requires_equipment: true });
+      exercises.push({ name: 'Tríceps na Corda', description: 'Exercício de braços', difficulty: 'INTERMEDIATE', requires_equipment: true });
+      exercises.push({ name: 'Elevação Lateral', description: 'Exercício de braços', difficulty: 'BEGINNER', requires_equipment: true });
+    }
+
+    if (groups.includes('Costas')) {
+      exercises.push({ name: 'Remada', description: 'Exercício de costas', difficulty: 'BEGINNER', requires_equipment: true });
+      exercises.push({ name: 'Puxada', description: 'Exercício para costas', difficulty: 'INTERMEDIATE', requires_equipment: true });
+    }
+
+    if (groups.includes('Ombros')) {
+      exercises.push({ name: 'Elevação Lateral', description: 'Exercício de ombros', difficulty: 'BEGINNER', requires_equipment: true });
+    }
+
+    if (groups.includes('Abdômen')) {
+      exercises.push({ name: 'Prancha', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false });
+      exercises.push({ name: 'Abdominal Estrela', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false });
+      exercises.push({ name: 'Abdômen Supra', description: 'Exercício de abdômen', difficulty: 'ADVANCED', requires_equipment: false });
     }
 
     return exercises.slice(0, 10);
