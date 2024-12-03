@@ -10,17 +10,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // Mapa de imagens para exercícios
 const exerciseImages: Record<string, string> = {
   "Corrida": "https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png",
-  "Burpees": "https://example.com/burpees.png",
-  "Pular Corda": "https://example.com/pular-corda.png",
-  "Bicicleta": "https://example.com/bicicleta.png",
-  "Polichinelo": "https://example.com/polichinelo.png",
-  "Flexão": "https://example.com/flexao.png",
-  "Agachamento": "https://example.com/agachamento.png",
+  "Burpees": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  "Pular Corda": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  "Bicicleta": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpgg",
+  "Polichinelo": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  "Flexão": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  "Agachamento": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
   "Supino": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
-  "Crucifixo": "https://example.com/crucifixo.png",
-  "Leg Press": "https://example.com/leg-press.png",
-  // Adicione mais exercícios aqui
-  default: "https://example.com/default.png", // Imagem padrão
+  "Crucifixo": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  "Leg Press": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  default: "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg", // Imagem padrão
 };
 
 
