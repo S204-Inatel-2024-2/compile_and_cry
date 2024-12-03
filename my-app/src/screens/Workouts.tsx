@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ExerciseCard } from '@components/ExerciseCard';
 import { HomeHeader } from '@components/HomeHeader';
-import { Center, Divider, Text } from '@gluestack-ui/themed';
+import { Center, Divider, Text, ScrollView } from '@gluestack-ui/themed'; // Importar ScrollView
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -38,13 +38,14 @@ export function Workouts() {
   return (
     <>
       <HomeHeader showBackButton={true} title="Treino Personalizado" />
-          <Center>
-            <Text pb={20} mt={40} color="white">
-              Exercícios
-            </Text>
-          </Center>
-          <Divider bg="$gray400" mb={20} />
-          <Center>
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}> {/* ScrollView envolve o conteúdo */}
+        <Center>
+          <Text pb={20} mt={40} color="white">
+            Exercícios
+          </Text>
+        </Center>
+        <Divider bg="$gray400" mb={20} />
+        <Center>
           {exercises.length === 0 ? (
             <Text color="white">Nenhum exercício disponível</Text> // Caso não haja exercícios
           ) : (
@@ -60,7 +61,8 @@ export function Workouts() {
               />
             ))
           )}
-          </Center>
+        </Center>
+      </ScrollView>
     </>
   );
 }
