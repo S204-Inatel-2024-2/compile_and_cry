@@ -1,27 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import { ExerciseCard } from '@components/ExerciseCard';
 import { HomeHeader } from '@components/HomeHeader';
-import { Center, Divider, Text, ScrollView } from '@gluestack-ui/themed'; // Importar ScrollView
+import { Center, Divider, Text, ScrollView } from '@gluestack-ui/themed';
 import { useNavigation } from '@react-navigation/native';
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
+// Mapa de imagens
+// Mapa de imagens para exercícios
+const exerciseImages: Record<string, string> = {
+  "Corrida": "https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png",
+  "Burpees": "https://example.com/burpees.png",
+  "Pular Corda": "https://example.com/pular-corda.png",
+  "Bicicleta": "https://example.com/bicicleta.png",
+  "Polichinelo": "https://example.com/polichinelo.png",
+  "Flexão": "https://example.com/flexao.png",
+  "Agachamento": "https://example.com/agachamento.png",
+  "Supino": "https://static1.minhavida.com.br/articles/97/75/46/e7/supino-inclinado-com-barrashutterstock-article-1.jpg",
+  "Crucifixo": "https://example.com/crucifixo.png",
+  "Leg Press": "https://example.com/leg-press.png",
+  // Adicione mais exercícios aqui
+  default: "https://example.com/default.png", // Imagem padrão
+};
+
 
 export function Workouts() {
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
   const [exercises, setExercises] = useState<{ name: string; description: string }[]>([]);
 
   useEffect(() => {
-    // Função para recuperar os dados do AsyncStorage
     async function fetchExercises() {
       try {
         const savedExercises = await AsyncStorage.getItem('@exercises');
-        console.log('Dados recuperados do AsyncStorage:', savedExercises); // Verifique o formato dos dados
+        console.log('Dados recuperados do AsyncStorage:', savedExercises);
 
         if (savedExercises !== null) {
-          // Se os exercícios foram salvos no AsyncStorage, converta para JSON
           const exercisesData = JSON.parse(savedExercises);
-          console.log('Exercícios convertidos:', exercisesData); // Verifique os dados após a conversão
-          setExercises(exercisesData); // Atualiza o estado com os dados recuperados
+          console.log('Exercícios convertidos:', exercisesData);
+          setExercises(exercisesData);
         }
       } catch (error) {
         console.error('Erro ao recuperar exercícios:', error);
@@ -38,7 +54,7 @@ export function Workouts() {
   return (
     <>
       <HomeHeader showBackButton={true} title="Treino Personalizado" />
-      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}> {/* ScrollView envolve o conteúdo */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
         <Center>
           <Text pb={20} mt={40} color="white">
             Exercícios
@@ -47,19 +63,23 @@ export function Workouts() {
         <Divider bg="$gray400" mb={20} />
         <Center>
           {exercises.length === 0 ? (
-            <Text color="white">Nenhum exercício disponível</Text> // Caso não haja exercícios
+            <Text color="white">Nenhum exercício disponível</Text>
           ) : (
-            exercises.map((exercise, index) => (
-              <ExerciseCard
-                key={index}
-                onPress={handleToExercise}
-                title={exercise.name} // Usando o name como title
-                variant="solid"
-                mb={20}
-                children={exercise.description} // Usando description como children
-                imageUrl="https://v4excellencefitness.com.br/wp-content/uploads/2023/05/Bicep-Alternado-Martelo1.png"
-              />
-            ))
+            exercises.map((exercise, index) => {
+              // Obter a imagem correspondente ou usar a imagem padrão
+              const imageUrl = exerciseImages[exercise.name] || exerciseImages.default;
+              return (
+                <ExerciseCard
+                  key={index}
+                  onPress={handleToExercise}
+                  title={exercise.name}
+                  variant="solid"
+                  mb={20}
+                  children={exercise.description}
+                  imageUrl={imageUrl} // Define a imagem dinâmica
+                />
+              );
+            })
           )}
         </Center>
       </ScrollView>
